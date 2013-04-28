@@ -16,19 +16,22 @@ class Person:
             self.father.kids.append(self)
 
     def get_brothers(self):
-        return self.get_siblings(gender='M')
+        all_brothers = []
+        if self.mother is not None:
+            all_brothers += self.mother.children('M')
+        if self.father is not None:
+            all_brothers += self.father.children('M')
+        non_doubling_brothers = {x for x in all_brothers if x != self}
+        return list(non_doubling_brothers)
 
     def get_sisters(self):
-        return self.get_siblings(gender='F')
-
-    def get_siblings(self, gender=None):
-        siblings = []
-        if self.father is not None:
-            siblings += self.father.children(gender)
+        all_sisters = []
         if self.mother is not None:
-            siblings += self.mother.children(gender)
-        non_doubling_siblings = {x for x in siblings if x != self}
-        return list(non_doubling_siblings)
+            all_sisters += self.mother.children('F')
+        if self.father is not None:
+            all_sisters += self.father.children('F')
+        non_doubling_sisters = {x for x in all_sisters if x != self}
+        return list(non_doubling_sisters)
 
     def children(self, gender="both"):
         if gender == 'F':

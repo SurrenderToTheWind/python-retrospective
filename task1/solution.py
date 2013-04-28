@@ -1,4 +1,5 @@
-ASTRO_SIGNS = (
+SIGNS = (
+    (19, 'Козирог'),
     (18, 'Водолей'),
     (20, 'Риби'),
     (20, 'Овен'),
@@ -9,11 +10,12 @@ ASTRO_SIGNS = (
     (22, 'Дева'),
     (22, 'Везни'),
     (21, 'Скорпион'),
-    (21, 'Стрелец'),
-    (19, 'Козирог')
+    (21, 'Стрелец')
 )
 
 
 def what_is_my_sign(day, month):
-    """ Return the horoscope sign according to the day and month. """
-    return ASTRO_SIGNS[month - 1 - (ASTRO_SIGNS[month-2][0] >= day)][1]
+    if (SIGNS[month-1][0] >= day):
+        return SIGNS[month-1][1]
+    else:
+        return SIGNS[month % 12][1]
